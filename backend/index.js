@@ -16,7 +16,6 @@ app.use(cors({
   methods: 'GET,POST,PUT,DELETE,OPTIONS',
   allowedHeaders: 'Content-Type,Authorization',
   credentials: true // Allow credentials
-
 }));
 app.use(cookieParser())
 app.use(express.json({ limit:  2 * 1024 * 1024 }));

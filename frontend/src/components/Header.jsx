@@ -78,14 +78,14 @@ const Header = () => {
                 </div>
                 
             </div>
-            <div className=' flex items-center gap-9'>
+            <div className=' flex items-center gap-4 lg:gap-9'>
             <div className=' relative group lg:flex justify-center'>
               {
                 user?._id && (
                   <div className='text-3xl cursor-pointer shadow-sm' onClick={()=>setMenuDisplay(preve=>!preve)}>
                   {
                             user?.profilePic ? (
-                          <img src={user?.profilePic} className='w-8 h-8 rounded-full' alt={user?.name} />
+                          <img src={user?.profilePic} className='w-7 h-7 rounded-full' alt={user?.name} />
                             ) : (
                               <FaUserCircle/>
                             )

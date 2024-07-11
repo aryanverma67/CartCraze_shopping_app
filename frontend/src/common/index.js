@@ -1,4 +1,4 @@
-const backendDomin = import.meta.env.VITE_BACKEND_URL
+const backendDomin = "http://localhost:4000"
 
 const SummaryApi = {
     signUP : {

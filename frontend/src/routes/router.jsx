@@ -20,6 +20,7 @@ import CategoryProduct from '../pages/CategoryProduct';
 import Success from '../pages/Success';
 import Cancel from '../pages/Cancel';
 import Order from '../pages/Order';
+import AllOrder from '../pages/AllOrder';
 
 
 
@@ -89,7 +90,12 @@ const router = createBrowserRouter([
             {
                 path : "all-products",
                 element : <AllProducts/>
-            }
+            },
+            {
+              path : "all-order",
+              element : <AllOrder/>
+          }
+      
         ]
 
         },  {

@@ -1,4 +1,4 @@
-const backendDomin = import.meta.env.VITE_BACKEND_URL
+const backendDomin = import.meta.env.VITE_APP_BACKEND_URL
 
 const SummaryApi = {
     signUP : {

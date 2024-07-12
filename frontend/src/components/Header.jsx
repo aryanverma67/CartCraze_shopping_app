@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FaCircle, FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaCircle, FaSearch,FaBars, FaUserCircle, FaTimes } from "react-icons/fa";
 import { IoCartSharp } from "react-icons/io5";
 import { IoLogIn,IoLogOut } from "react-icons/io5";
 import { useSelector,useDispatch } from 'react-redux';
@@ -26,8 +26,11 @@ const Header = () => {
     const URLSearch = new URLSearchParams(searchInput?.search)
     const searchQuery = URLSearch.getAll("q")
     const [search,setSearch] = useState(searchQuery)
+    const [isMenuOpen, setisMenuOpen] = useState(false)
 
-
+const toggleMenu  = ()=>{
+  setisMenuOpen(!isMenuOpen)
+}
     const handleLogout = async() => {
         const fetchData = await fetch(SummaryApi.logout_user.url,{
           method : SummaryApi.logout_user.method,
@@ -63,7 +66,7 @@ const Header = () => {
     
   
   return (
-    <nav className='h-16 shadow-md bg-white fixed w-full z-40  '>
+    <nav className='h-16 shadow-md bg-white fixed w-full z-40   '>
         <div className='h-full container mx-auto flex justify-between items-center px-3 '>
             <div className=''>
           <Link to= '/'>                
@@ -78,7 +81,89 @@ const Header = () => {
                 </div>
                 
             </div>
-            <div className=' flex items-center gap-4 lg:gap-9'>
+            {/* for phone */}
+            <button onClick={toggleMenu} className='absolute right-7 lg:hidden block z-10' >
+            {isMenuOpen ? (
+              <FaTimes className='w-6 h-6 z-10'/>
+        ) : (
+          <FaBars className='w-6 h-6  '/>
+        )}
+        
+
+            </button>
+            <div
+        className={`fixed top-0 right-0 w-[200px] bg-white bg-opacity-80 rounded-xl mr-4 mt-3   h-[400px] shadow-lg  transform transition-transform duration-300 ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className='flex mb-20  items-center justify-center mt-10'>
+        {
+                user?._id && (
+                  <div className='text-3xl cursor-pointer shadow-sm' onClick={()=>setMenuDisplay(preve=>!preve)}>
+                  {
+                            user?.profilePic ? (
+                          <img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />
+                            ) : (
+                              <FaUserCircle/>
+                            )
+                          }
+  
+  
+                  </div>
+  
+                  
+                )
+                
+              }
+                {
+                  menuDisplay && (
+                    <div className='   absolute  bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded  '>
+                  
+                  <nav>
+                          {
+                            user?.role === ROLE.ADMIN && (
+                              <Link to={"/admin-panel/all-products"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(preve => !preve)}>Admin Panel</Link>
+                            )
+                          }
+                          <Link to={'/order'} className='whitespace-nowrap md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(preve => !preve)}>Order</Link>
+                         
+                        </nav>                  </div>
+  
+  
+                  )
+                }
+            </div>
+            <div className='flex mb-20 items-center justify-center '>
+            {
+                      user?._id &&(
+                        <Link to= '/cart' className='text-3xl  shadow-sm cursor-pointer relative'>
+                        <span><IoCartSharp /></span>
+                        <div className='bg-red-500 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3'>
+                            <p className='text-sm'>{context?.cartProductCount}</p>
+                        </div>
+                    </Link>
+    
+
+                      ) 
+                    }
+
+            </div>
+
+
+                <div className='flex items-center justify-center' >
+                {
+                    user?._id  ? (
+                      <button onClick={handleLogout} className='px-4 flex items-center py-2 rounded-2xl text-black border shadow-md font-semibold bg-white active:bg-blue-600'> <IoLogOut className='w-7  h-7' />Logout</button>
+                    )
+                    : (
+                        <Link to= '/login' className='px-4 flex items-center py-2 rounded-2xl text-black border shadow-md font-semibold bg-white active:bg-blue-600'> <IoLogIn className='w-7  h-7' /> Login</Link>
+                    )
+                  }
+
+                </div>
+            </div>
+            {/* for desktop */}
+            <div className=' hidden lg:flex items-center gap-4 lg:gap-9'>
             <div className=' relative group lg:flex justify-center'>
               {
                 user?._id && (
